@@ -12,3 +12,4 @@ def convert_integer(number_string):
     return converted_integer
 
 answer = sum("1","2")
+print answer
