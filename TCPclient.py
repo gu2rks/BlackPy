@@ -1,7 +1,7 @@
 import socket
 
-target_host = "www.facebook.com"
-target_port = 80
+target_host = "0.0.0.0"
+target_port = 9999
 
 #create a socket object
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -10,9 +10,9 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((target_host,target_port))
 
 #send some data
-client.send("GET / HTTP\1.1\r\nHost: facebook.com\r\n\r\n")
+client.send("gu2rks is here")
 
 #recevie some data
-response = client.recv(3000)
+response = client.recv(4096)
 
 print response
