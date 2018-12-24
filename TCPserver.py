@@ -6,33 +6,37 @@ bind_port = 9999
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-#1
+#pass of ip and port that server going to listen on
 server.bind((bind_ip,bind_port))
 
-#2
+#listen max 5 clients
 server.listen(5)
 
 print "[*] Listening on %s:%d" %(bind_ip, bind_port)
 
-#3 this is our client-handling thread
+#client-handling thread
 def handle_client(client_socket):
     
     #print out what the client sends
     request = client_socket.recv(1024)
-    
     print "[*] Received: %s" % request
     
     #send back a packet
     client_socket.send("Wellcome to Blackpy")
     
     client_socket.close()
-    
-while True:
-    client,addr = server.accept()
+
+#waiting for an incoming connection
+while True: 
+    client,addr = server.accept() #<--- contected server
+    #client = client socket
+    #addr = remote connection detail
     
     print "[*] Accepted connection from: %s:%d" %(addr[0],addr[1])
     
-    #spin up our client thread to handle incoming data
+    #create a new thread object that points to our handle_client function, 
+    #pass the client socket object as an argument.
     client_handler = threading.Thread(target=handle_client, args=(client,))
+    #start the thread to handle the client connection
     client_handler.start()
     
