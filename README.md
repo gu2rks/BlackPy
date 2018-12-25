@@ -11,7 +11,7 @@ a simple program that convert string to integer. I try to learn how Debugging wo
 ### TCPclient.py
 * AF_INET = IPv4 adreass/hostname.
 * SOCK_STRAM = indicate that this will be a TCP client.
-* \r\n = breakline.
+* \r\n = CRLF
 
 ### UDPclient.py
 UDP is a connectionless protocall, there is no need to connect() beforehand (unlike TCP),
