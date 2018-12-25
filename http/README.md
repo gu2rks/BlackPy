@@ -29,8 +29,11 @@ GET /item version CRLF
 General format of lines in a basic response header:
 ```
 HTTP/1.0 status_code status_string CRLF
-Server: server_identification CRLF Last-Modified: date_document_was_changed CRLF Content-Length: datasize CRLF
-Content-Type: document_type CRLF CRLF
+Server: server_identification CRLF 
+Last-Modified: date_document_was_changed CRLF 
+Content-Length: datasize CRLF
+Content-Type: document_type CRLF 
+CRLF
 ````
 # by runing getHeader.py
 ![alt text](https://github.com/gu2rks/BlackPy/blob/master/pic/Screenshot%202018-12-24%20at%2023.37.49.png)
