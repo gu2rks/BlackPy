@@ -13,6 +13,7 @@ target             = ""
 upload_destination = ""
 port               = 0
 
+#usage: to guide the user how to use this programe
 def usage():
    print "BLACKPY Net Tool\n\n"
    
@@ -34,6 +35,44 @@ def usage():
          "echo 'ABCDEFGHI' | ./bhpnet.py -t 192.168.11.12 -p 135"
    sys.exit(0)
 
+def client_sender:
+   client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+   try:
+      #connect to target host
+      client.connect((target,port))
+
+      if len(buffer)
+         client.send(buffer)
+
+      while True:
+         #wit for data back
+         recv_len = 1
+         response = ""
+
+         while recv_len:
+            data = client.recv(4096)
+            recv_len = len(data)
+            response += data
+            
+            if recv_len < 4096:
+               break
+         print response,
+
+         # wait for more input
+         buffer = raw_input("")
+         buffer += "\n"
+
+         #send it off
+         client.send(buffer)
+
+   except:
+      print "[*] Exception! Exiting.."
+      #tear down the connection
+      client.close
+
+def server_loop():
+   
 #main
 def main():
    global listen
@@ -58,22 +97,16 @@ def main():
          usage()
       elif o in ("-l","--listen"):
          listen = True
-         print listen
       elif o in ("-e","--execute"):
          execute = a
-         print execute
       elif o in ("-c", "--commandshell"):
          command = True
-         print command
       elif o in ("-t", "--target"):
          target =  a
-         print target
       elif o in ("-u", "--upload"):
          upload_destination = a
-         print upload_destination
       elif o in ("-p", "--port"):
          port = int(a)
-         print port
       else:
          assert False,"Invaild Option"
 
@@ -85,7 +118,7 @@ def main():
       buffer = sys.stdin.read()
       
       #send data off
-      cliemt_sender(buffer)
+      client_sender(buffer)
    
    #listen and pontentailly, uploard things, execute commands
    #and drop a shell back depending on our commanline
