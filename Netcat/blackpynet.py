@@ -72,7 +72,23 @@ def client_sender:
       client.close
 
 def server_loop():
-   
+   global target
+
+   #if no target is definded -> listen on all interface
+   if not len(target):
+      target = "0.0.0.0"
+   server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   server.bind((target,port))
+   server.listen(5)
+
+   while True:
+      client_socket,addr = server.accept()
+
+      #spin off a thread to handle our new client
+      client_thread = threading.Thread(target=client_handler,args=(client_socket,))
+      client_thread.start()
+
+
 #main
 def main():
    global listen
