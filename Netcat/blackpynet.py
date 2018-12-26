@@ -35,14 +35,14 @@ def usage():
          "echo 'ABCDEFGHI' | ./bhpnet.py -t 192.168.11.12 -p 135"
    sys.exit(0)
 
-def client_sender:
+def client_sender():
    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
    try:
       #connect to target host
       client.connect((target,port))
 
-      if len(buffer)
+      if len(buffer):
          client.send(buffer)
 
       while True:
@@ -87,6 +87,18 @@ def server_loop():
       #spin off a thread to handle our new client
       client_thread = threading.Thread(target=client_handler,args=(client_socket,))
       client_thread.start()
+
+def run_command(command):
+   #trim the newline
+   command = command.rstrip()
+
+   #run the command and get the output back
+   try:
+      output = subprocess.check_output(command,stderr=subprocess.STDOUT,shell=True)
+   except:
+      output = "Faild to execute command.\r\n"
+
+   return output
 
 
 #main
