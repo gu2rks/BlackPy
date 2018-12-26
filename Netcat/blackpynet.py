@@ -14,7 +14,7 @@ upload_destination = ""
 port               = 0
 
 def usage():
-   print "bLACKPY Net Tool\n\n"
+   print "BLACKPY Net Tool\n\n"
    
 
    print "Usage: blackpypnet.py -t target_host -p port"
@@ -27,10 +27,10 @@ def usage():
          "file and write to [destination]\n\n"
 
 
-   print "Examples:\nblackpypnet.py -t 192.168.0.1 -p 5555 -l -c\n", \
-         "blackpypnet.py -t 192.168.0.1 -p 5555 -l -c\n", \
-         "blackpypnet.py -t 192.168.0.1 -p 5555 -l -u=c:\\target.exe\n", \
-         "blackpypnet.py -t 192.168.0.1 -p 5555 -l -e=\"cat /etc/passwd\"\n", \
+   print "Examples:\nblackpynet.py -t 192.168.0.1 -p 5555 -l -c\n", \
+         "blackpynet.py -t 192.168.0.1 -p 5555 -l -c\n", \
+         "blackpynet.py -t 192.168.0.1 -p 5555 -l -u=c:\\target.exe\n", \
+         "blackpynet.py -t 192.168.0.1 -p 5555 -l -e=\"cat /etc/passwd\"\n", \
          "echo 'ABCDEFGHI' | ./bhpnet.py -t 192.168.11.12 -p 135"
    sys.exit(0)
 
@@ -54,7 +54,42 @@ def main():
       print str(err)
       usage()
    for o,a in opts:
-      if o in ("-h","-help"):
+      if o in ("-h","--help"):
          usage()
+      elif o in ("-l","--listen"):
+         listen = True
+         print listen
+      elif o in ("-e","--execute"):
+         execute = a
+         print execute
+      elif o in ("-c", "--commandshell"):
+         command = True
+         print command
+      elif o in ("-t", "--target"):
+         target =  a
+         print target
+      elif o in ("-u", "--upload"):
+         upload_destination = a
+         print upload_destination
+      elif o in ("-p", "--port"):
+         port = int(a)
+         print port
+      else:
+         assert False,"Invaild Option"
+
+   #listen or send data from stdin?
+   if not listen and len(target) and port > 0:
+
+      #read in the buffer from the commandline
+      #this will bloack, so send CTRL-D if not sending input to stdin
+      buffer = sys.stdin.read()
+      
+      #send data off
+      cliemt_sender(buffer)
+   
+   #listen and pontentailly, uploard things, execute commands
+   #and drop a shell back depending on our commanline
+   if listen:
+      server_loop()
       
 main()
